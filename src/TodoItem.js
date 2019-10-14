@@ -5,15 +5,18 @@ import Item from './Item';
 export default class TodoItem extends Component {
 	render() {
 		return (
-			<div>
-				<ul>
-					{this.props.items.map((item, index) => {
-						return (
-							<Item key={index} text={item.text} completed={item.completed} />
-						);
-					})}
-				</ul>
-			</div>
+			<ul>
+				{this.props.todos.map((todo, index) => {
+					return (
+						<Item
+							key={index}
+							id={todo.id}
+							text={todo.text}
+							completed={todo.completed}
+						/>
+					);
+				})}
+			</ul>
 		);
 	}
 }
