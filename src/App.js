@@ -30,6 +30,7 @@ export default class App extends Component {
 		};
 
 		this.onTodosAdded = this.onTodosAdded.bind(this);
+		this.onTodosChecked = this.onTodosChecked.bind(this);
 	}
 
 	onTodosAdded(text) {
@@ -42,11 +43,22 @@ export default class App extends Component {
 		this.setState({ todos: [...this.state.todos, todo] });
 	}
 
+	onTodosChecked(id) {
+		const checkedTodos = this.state.todos.map(todo =>
+			todo.id === id
+				? { id: todo.id, text: todo.text, completed: !todo.completed }
+				: todo
+		);
+		this.setState({
+			todos: checkedTodos
+		});
+	}
+
 	render() {
 		return (
 			<>
 				<TodoForm onTodosAdded={this.onTodosAdded} />
-				<TodoItem todos={this.state.todos} />
+				<TodoItem todos={this.state.todos} onChecked={this.onTodosChecked} />
 			</>
 		);
 	}

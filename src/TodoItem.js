@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import Item from './Item';
 
 export default class TodoItem extends Component {
+	handleChecked = id => {
+		this.props.onChecked(id);
+	};
+
 	render() {
 		return (
 			<ul>
@@ -12,7 +16,8 @@ export default class TodoItem extends Component {
 							key={index}
 							id={todo.id}
 							text={todo.text}
-							completed={todo.completed}
+							checked={todo.completed}
+							onChecked={this.handleChecked}
 						/>
 					);
 				})}
