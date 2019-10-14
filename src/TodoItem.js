@@ -7,20 +7,29 @@ export default class TodoItem extends Component {
 		this.props.onChecked(id);
 	};
 
+	handleDeleted = id => {
+		this.props.onDeleted(id);
+	};
+
 	render() {
 		return (
 			<ul>
-				{this.props.todos.map((todo, index) => {
-					return (
-						<Item
-							key={index}
-							id={todo.id}
-							text={todo.text}
-							checked={todo.completed}
-							onChecked={this.handleChecked}
-						/>
-					);
-				})}
+				{this.props.todos.length === 0 ? (
+					<p>No todos, add todos here</p>
+				) : (
+					this.props.todos.map((todo, index) => {
+						return (
+							<Item
+								key={index}
+								id={todo.id}
+								text={todo.text}
+								checked={todo.completed}
+								onChecked={this.handleChecked}
+								onDeleted={this.handleDeleted}
+							/>
+						);
+					})
+				)}
 			</ul>
 		);
 	}

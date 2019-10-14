@@ -3,34 +3,17 @@ import React, { Component } from 'react';
 import TodoForm from './TodoForm';
 import TodoItem from './TodoItem';
 
-const TODOS = [
-	{
-		id: 1,
-		text: 'Play with Son',
-		completed: false
-	},
-	{
-		id: 2,
-		text: 'Make Cappuccino',
-		completed: false
-	},
-	{
-		id: 3,
-		text: 'Go to Campus',
-		completed: false
-	}
-];
-
 export default class App extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			todos: TODOS
+			todos: []
 		};
 
 		this.onTodosAdded = this.onTodosAdded.bind(this);
 		this.onTodosChecked = this.onTodosChecked.bind(this);
+		this.onTodosDeleted = this.onTodosDeleted.bind(this);
 	}
 
 	onTodosAdded(text) {
@@ -54,11 +37,22 @@ export default class App extends Component {
 		});
 	}
 
+	onTodosDeleted(id) {
+		const deletedTodos = this.state.todos.filter(todo => todo.id !== id);
+		this.setState({
+			todos: deletedTodos
+		});
+	}
+
 	render() {
 		return (
 			<>
 				<TodoForm onTodosAdded={this.onTodosAdded} />
-				<TodoItem todos={this.state.todos} onChecked={this.onTodosChecked} />
+				<TodoItem
+					todos={this.state.todos}
+					onChecked={this.onTodosChecked}
+					onDeleted={this.onTodosDeleted}
+				/>
 			</>
 		);
 	}

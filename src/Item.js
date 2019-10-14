@@ -5,10 +5,15 @@ export default class Item extends Component {
 		super(props);
 
 		this.handleChange = this.handleChange.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	handleChange() {
 		this.props.onChecked(this.props.id);
+	}
+
+	handleDelete() {
+		this.props.onDeleted(this.props.id);
 	}
 
 	render() {
@@ -28,6 +33,7 @@ export default class Item extends Component {
 				>
 					{this.props.text}
 				</span>
+				<button onClick={this.handleDelete}>Delete</button>
 			</li>
 		);
 	}
