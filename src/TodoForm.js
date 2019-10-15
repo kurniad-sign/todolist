@@ -18,20 +18,43 @@ export default class TodoForm extends Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.onTodosAdded(this.state.value);
+
+		!this.state.value
+			? alert('Please fill the field')
+			: this.props.onTodosAdded(this.state.value);
 		this.setState({ value: '' });
 	}
 
 	render() {
+		const styles = {
+			inputField: {
+				padding: '0.4rem 1.2rem',
+				fontFamily: 'inherit',
+				fontSize: 14
+			},
+			button: {
+				cursor: 'pointer',
+				padding: '0.5rem 1.2rem',
+				fontSize: 14,
+				fontFamily: 'inherit',
+				backgroundColor: 'tomato',
+				color: 'white',
+				border: '1px solid currentColor'
+			}
+		};
+
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<input
 					type="text"
 					placeholder="Enter your list here"
+					style={styles.inputField}
 					value={this.state.value}
 					onChange={this.handleChange}
 				/>
-				<button type="submit">Add Todo</button>
+				<button type="submit" style={styles.button}>
+					Add Todo
+				</button>
 			</form>
 		);
 	}
