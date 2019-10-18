@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class Button extends Component {
-	render() {
-		return (
-			<a
-				href="#"
-				onClick={e => {
-					e.preventDefault();
-					this.props.onFiltered(this.props.currentFilter);
-				}}
-			>
-				{this.props.children}
-			</a>
-		);
-	}
+export default function Button({ onFiltered, currentFilter, children }) {
+	return (
+		<button
+			onClick={() => {
+				onFiltered(currentFilter);
+			}}
+		>
+			{children}
+		</button>
+	);
 }
