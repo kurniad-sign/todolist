@@ -3,17 +3,17 @@ import React, { Component } from 'react';
 export default class TodoForm extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			value: ''
 		};
 
+		this.myValue = React.createRef();
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleChange(event) {
-		this.setState({ value: event.target.value });
+	handleChange() {
+		this.setState({ value: this.myValue.current.value });
 	}
 
 	handleSubmit(event) {
@@ -23,6 +23,10 @@ export default class TodoForm extends Component {
 			? alert('Please fill the field')
 			: this.props.onTodosAdded(this.state.value);
 		this.setState({ value: '' });
+	}
+
+	componentDidMount() {
+		this.myValue.current.focus();
 	}
 
 	render() {
@@ -46,6 +50,7 @@ export default class TodoForm extends Component {
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<input
+					ref={this.myValue}
 					type="text"
 					placeholder="Enter your list here"
 					style={styles.inputField}
