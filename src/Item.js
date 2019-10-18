@@ -17,6 +17,15 @@ export default class Item extends Component {
 	}
 
 	render() {
+		const { currentFilter } = this.props;
+		if (currentFilter === 'Completed' || currentFilter === 'Active') {
+			return (
+				<li>
+					<span>{this.props.text}</span>
+				</li>
+			);
+		}
+
 		return (
 			<li id={this.props.id}>
 				<input
