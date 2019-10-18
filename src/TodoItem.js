@@ -1,42 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import Item from './Item';
-
-export default class TodoItem extends Component {
-	handleChecked = id => {
-		this.props.onChecked(id);
-	};
-
-	handleDeleted = id => {
-		this.props.onDeleted(id);
-	};
-
-	render() {
-		const { currentFilter, todos, onFiltered } = this.props;
-		const filteredTodos = onFiltered(todos, currentFilter);
+export default function TodoItem({
+	id,
+	text,
+	checked,
+	currentFilter,
+	onChecked,
+	onDeleted
+}) {
+	if (currentFilter === 'Completed' || currentFilter === 'Active') {
 		return (
-			<div>
-				<ul>
-					{this.props.todos.length === 0 ? (
-						<p>No todos, add todos here</p>
-					) : (
-						filteredTodos.map((todo, index) => {
-							return (
-								<Item
-									key={index}
-									id={todo.id}
-									text={todo.text}
-									checked={todo.completed}
-									currentFilter={currentFilter}
-									onFiltered={onFiltered}
-									onChecked={this.handleChecked}
-									onDeleted={this.handleDeleted}
-								/>
-							);
-						})
-					)}
-				</ul>
-			</div>
+			<li>
+				<span>{text}</span>
+			</li>
 		);
 	}
+
+	return (
+		<li id={id}>
+			<input type="checkbox" checked={checked} onChange={() => onChecked(id)} />{' '}
+			<span
+				style={{
+					textDecoration: checked ? 'line-through' : 'none'
+				}}
+			>
+				{text}
+			</span>{' '}
+			<button onClick={() => onDeleted(id)}>Delete</button>
+		</li>
+	);
 }
