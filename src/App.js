@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import TodoForm from './TodoForm';
-import TodoList from './TodoList';
-import Links from './Links';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
+import Links from './components/Links';
 
 export default class App extends Component {
 	constructor(props) {
