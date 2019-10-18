@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import TodoForm from './TodoForm';
-import TodoItem from './TodoItem';
-import Button from './Button';
+import TodoList from './TodoList';
+import Links from './Links';
 
 export default class App extends Component {
 	constructor(props) {
@@ -16,8 +16,8 @@ export default class App extends Component {
 		this.onTodosAdded = this.onTodosAdded.bind(this);
 		this.onTodosChecked = this.onTodosChecked.bind(this);
 		this.onTodosDeleted = this.onTodosDeleted.bind(this);
-		this.filterActive = this.filterActive.bind(this);
-		this.onFiltered = this.onFiltered.bind(this);
+		this.onFilterActive = this.onFilterActive.bind(this);
+		this.onCurrentFilter = this.onCurrentFilter.bind(this);
 	}
 
 	onTodosAdded(text) {
@@ -48,7 +48,7 @@ export default class App extends Component {
 		});
 	}
 
-	filterActive(todos, currentFilter) {
+	onFilterActive(todos, currentFilter) {
 		const activeTodos = todos.filter(todo => {
 			switch (currentFilter) {
 				case 'All':
@@ -64,7 +64,7 @@ export default class App extends Component {
 		return activeTodos;
 	}
 
-	onFiltered(props) {
+	onCurrentFilter(props) {
 		this.setState({
 			currentFilter: props
 		});
@@ -74,25 +74,16 @@ export default class App extends Component {
 		return (
 			<>
 				<TodoForm onTodosAdded={this.onTodosAdded} />
-				<TodoItem
+				<TodoList
 					todos={this.state.todos}
 					currentFilter={this.state.currentFilter}
-					onFiltered={this.filterActive}
+					onFiltered={this.onFilterActive}
 					onChecked={this.onTodosChecked}
 					onDeleted={this.onTodosDeleted}
 				/>
-				<p>
-					Show:{' '}
-					<Button currentFilter="All" onFiltered={this.onFiltered}>
-						All
-					</Button>{' '}
-					<Button currentFilter="Active" onFiltered={this.onFiltered}>
-						Active
-					</Button>{' '}
-					<Button currentFilter="Completed" onFiltered={this.onFiltered}>
-						Completed
-					</Button>
-				</p>
+				{this.state.todos.length > 0 && (
+					<Links onFiltered={this.onCurrentFilter} />
+				)}
 			</>
 		);
 	}
